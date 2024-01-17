@@ -20,7 +20,7 @@ def normalizar(data):
 
 def main():
     random.seed(42)
-    N = [2 ** n for n in range(1, 15)]
+    N = [2 ** n for n in range(1, 10)]
     casos = [generar_caso(n) for n in N]
     t = []
     nlogn = normalizar([n * math.log2(n) for n in N])
