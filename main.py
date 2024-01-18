@@ -1,6 +1,6 @@
+import argparse
 import time
 from typing import List, Tuple, Callable
-import argparse
 
 from algoritmos import ALGORITMOS, calcular_tiempo_analisis
 
@@ -39,7 +39,6 @@ def parsear_argumentos() -> Tuple[str, Callable[[List[Tuple[int, int]]], List[Tu
 
     return path, algoritmo
 
-
 def main():
     path, algoritmo = parsear_argumentos()
 
@@ -54,7 +53,6 @@ def main():
 
     tiempo_analisis = calcular_tiempo_analisis(tiempos_ordenados)
     print("Tiempo final del analisis: {}".format(tiempo_analisis))
-
 
 if __name__ == "__main__":
     main()
