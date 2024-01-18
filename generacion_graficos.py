@@ -32,14 +32,13 @@ def main():
 
     t = normalizar(t)
 
-    plt.plot(N, t, marker='o', label='Actual Time (s)')
+    plt.plot(N, t, marker='o', label='Tiempo de ejecución')
 
     plt.plot(N, nlogn, marker='o', label='n * log2(n)')
 
     plt.xscale('log')
-    plt.xlabel('Input Size (N)')
-    plt.ylabel('Time (s) / n * log2(n)')
-    plt.title('Time Complexity Analysis')
+    plt.xlabel('Tamaño del set de datos (N)')
+    plt.title('Complejidad algorítmica')
     plt.legend()
     plt.savefig('time_complexity_plot.png')
 
