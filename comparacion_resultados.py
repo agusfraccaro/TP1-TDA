@@ -21,6 +21,7 @@ def cargar_tiempos(path: str) -> List[Tuple[int, int]]:
 
 
 def analizar_resultados_tiempo_analisis() -> None:
+
     archivos_csv = [archivo for archivo in os.listdir(DIRECTORIO_ARCHIVOS) if archivo.endswith(".csv")]
 
     nombre_algoritmos = list(ALGORITMOS.keys())
@@ -151,3 +152,10 @@ def analizar_resultados_tiempo_ejecucion() -> None:
 
     plt.savefig('time_execution_comparison_plot.png')
     plt.show()
+
+
+def main():
+    analizar_resultados_tiempo_analisis()
+    analizar_resultados_tiempo_ejecucion()
+
+main()

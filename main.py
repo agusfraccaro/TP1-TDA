@@ -1,9 +1,9 @@
+import argparse
 import time
 from typing import List, Tuple, Callable
-import argparse
 
-import comparacion_resultados
 from algoritmos import ALGORITMOS, calcular_tiempo_analisis
+
 
 def cargar_tiempos(path: str) -> List[Tuple[int, int]]:
     """
@@ -54,10 +54,5 @@ def main():
     tiempo_analisis = calcular_tiempo_analisis(tiempos_ordenados)
     print("Tiempo final del analisis: {}".format(tiempo_analisis))
 
-
-def main_comparacion_resultados():
-    comparacion_resultados.analizar_resultados_tiempo_analisis()
-    comparacion_resultados.analizar_resultados_tiempo_ejecucion()
-
 if __name__ == "__main__":
-    main_comparacion_resultados()
+    main()
