@@ -34,11 +34,10 @@ def analizar_resultados_tiempo_analisis() -> None:
         ax = axs[i // cant_columnas][i % cant_columnas]
         bars = ax.bar(eje_x + i, tiempos_gr, width=bar_width, label=nombres_gr, color=colores)
 
-        # Encontrar las que tienen el valor minimo de días
+        # Remarco las barras con menor valor
         first_min_bar = min(bars, key=lambda bar: bar.get_height())
         min_bars = [bar for bar in bars if bar.get_height() == first_min_bar.get_height()]
 
-        # Remarco las barras con menor valor
         rect_height = first_min_bar.get_height() - ax.get_ylim()[0]
         for bar in min_bars:
             rect = plt.Rectangle((bar.get_x(), ax.get_ylim()[0]), bar.get_width(), rect_height, linewidth=3, edgecolor='r', facecolor='none')
