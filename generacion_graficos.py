@@ -1,14 +1,10 @@
-import random
-import time
 import math
-from typing import List, Tuple
+import time
+
 import matplotlib.pyplot as plt
 
 from algoritmos import greedy_scaloni_por_ayudante
-
-
-def generar_caso(n: int) -> List[Tuple[int, int]]:
-    return [(random.randint(1, 100), random.randint(1, 100)) for _i in range(n)]
+from casos.generacion_casos import generar_casos, generar_tamanios
 
 
 def normalizar(data):
@@ -19,11 +15,10 @@ def normalizar(data):
 
 
 def main():
-    random.seed(42)
-    N = [2 ** n for n in range(1, 10)]
-    casos = [generar_caso(n) for n in N]
+    tamanios = generar_tamanios()
+    casos = generar_casos(tamanios)
     t = []
-    nlogn = normalizar([n * math.log2(n) for n in N])
+    nlogn = normalizar([n * math.log2(n) for n in tamanios])
     for caso in casos:
         t_i = time.time()
         greedy_scaloni_por_ayudante(caso)
@@ -32,9 +27,9 @@ def main():
 
     t = normalizar(t)
 
-    plt.plot(N, t, marker='o', label='Tiempo de ejecución')
+    plt.plot(tamanios, t, marker='o', label='Tiempo de ejecución')
 
-    plt.plot(N, nlogn, marker='o', label='n * log2(n)')
+    plt.plot(tamanios, nlogn, marker='o', label='n * log2(n)')
 
     plt.xscale('log')
     plt.xlabel('Tamaño del set de datos (N)')
