@@ -1,91 +1,78 @@
-import os
-import time
-from typing import List, Tuple
-import numpy as np
 import matplotlib.pyplot as plt
+import numpy as np
+from matplotlib.lines import Line2D
+from matplotlib.patches import Rectangle
 
-from algoritmos import ALGORITMOS, calcular_tiempo_analisis
+from algoritmos import ALGORITMOS, calcular_tiempo_analisis_completo
+from casos.generacion_casos import generar_tamanios_comparacion, generar_casos
 
 DIRECTORIO_ARCHIVOS = "casos"
-
-def cargar_tiempos(path: str) -> List[Tuple[int, int]]:
-    with open(path, "r") as archivo:
-        lineas = archivo.readlines()
-        tiempos = []
-        for linea in lineas[1:]:
-            t_i = linea.strip().split(',')
-            s_i = int(t_i[0])
-            a_i = int(t_i[1])
-            tiempos.append((s_i, a_i))
-    return tiempos
 
 
 def analizar_resultados_tiempo_analisis() -> None:
 
-    archivos_csv = [archivo for archivo in os.listdir(DIRECTORIO_ARCHIVOS) if archivo.endswith(".csv")]
-
     nombre_algoritmos = list(ALGORITMOS.keys())
-    colores = ['red', 'green', 'blue']
-    bar_width = 0.2
+    colores = ['tab:blue', 'tab:orange', 'tab:green']
     eje_x = np.arange(len(nombre_algoritmos))
+    bar_width = 0.3
+    cant_columnas = 2
+    tamanios = generar_tamanios_comparacion()
+    casos = generar_casos(tamanios)
 
-    fig, axs = plt.subplots(len(archivos_csv), 1, figsize=(10, 7 * len(archivos_csv)))
-    # Ajustar el espacio vertical entre subgráficos
-    plt.subplots_adjust(hspace=0.6)
+    fig, (axs) = plt.subplots(len(casos) // cant_columnas, cant_columnas, figsize=(35, 25))
+    plt.subplots_adjust(hspace=0.3, wspace=0.3)
 
-    # Calculo para cada archivo y ploteo:
-    for i, archivo_csv in enumerate(archivos_csv):
-        path = os.path.join(DIRECTORIO_ARCHIVOS, archivo_csv)
-        tiempos = cargar_tiempos(path)
-
-        print("Archivo {} cargado correctamente con n={}".format(archivo_csv, len(tiempos)))
+    # Calculo los dias para cada caso y ploteo
+    for i, caso in enumerate(casos):
         nombres_gr = []
         tiempos_gr = []
 
         for nombre, algoritmo in ALGORITMOS.items():
-            tiempos_ordenados = algoritmo(tiempos.copy())
-            resultado_analisis = calcular_tiempo_analisis(tiempos_ordenados)
+            dias_de_analisis = calcular_tiempo_analisis_completo(caso.copy(), algoritmo)
 
             nombres_gr.append(nombre)
-            tiempos_gr.append(resultado_analisis)
+            tiempos_gr.append(dias_de_analisis)
 
-            print("Tiempo final del análisis para {} con {}: {}".format(archivo_csv, nombre, resultado_analisis))
+        ax = axs[i // cant_columnas][i % cant_columnas]
+        bars = ax.bar(eje_x + i, tiempos_gr, width=bar_width, label=nombres_gr, color=colores)
 
-        # Cargo grafico de barras
-        bars = axs[i].bar(eje_x + i, tiempos_gr, width=bar_width, label=nombres_gr, color=colores)
+        # Encontrar las que tienen el valor minimo de días
+        first_min_bar = min(bars, key=lambda bar: bar.get_height())
+        min_bars = [bar for bar in bars if bar.get_height() == first_min_bar.get_height()]
 
-        # Encontrar la barra con el menor valor
-        min_bar = min(bars, key=lambda bar: bar.get_height())
-
-        # Obtener la altura del rectángulo desde la base hasta la altura máxima de la barra
-        rect_height = min_bar.get_height() - axs[i].get_ylim()[0]
-
-        # Remarco el rectangulo con el menor valor.
-        rect = plt.Rectangle((min_bar.get_x(), axs[i].get_ylim()[0]), min_bar.get_width(), rect_height, linewidth=3, edgecolor='y', facecolor='none')
-        axs[i].add_patch(rect)
+        # Remarco las barras con menor valor
+        rect_height = first_min_bar.get_height() - ax.get_ylim()[0]
+        for bar in min_bars:
+            rect = plt.Rectangle((bar.get_x(), ax.get_ylim()[0]), bar.get_width(), rect_height, linewidth=3, edgecolor='r', facecolor='none')
+            ax.add_patch(rect)
 
         # Agrego sobre cada barra su valor.
         for index, value in enumerate(tiempos_gr):
-            axs[i].text(eje_x[index] + i, value, f'{value:.0f}', ha='center', va='bottom')
+            ax.text(eje_x[index] + i, value, f'{value:.0f}', ha='center', va='bottom', fontsize=20)
 
-        axs[i].set_xlabel('Algoritmos', fontsize=10, weight='bold')
-        axs[i].set_ylabel('Tiempo de Análisis (dias)', fontsize=10, weight='bold')
+        ax.set_title(f'Comparación de tiempo de análisis para {len(caso)} rivales', fontsize=30)
+        ax.set_xlabel('Algoritmo utilizado', fontsize=20, weight='bold')
+        ax.set_ylabel('Tiempo de análisis (días)', fontsize=20, weight='bold')
 
-        # Customizo el eje y para setear limites y desactivar notacion cientifica
-        axs[i].set_ylim(bottom=0, top=max(tiempos_gr) * 1.2)
-        axs[i].ticklabel_format(axis='y', style='plain')
+        # Establezco limites en el eje y
+        ax.tick_params(axis='y', labelsize=20)
+        ax.tick_params(axis='x', labelsize=20)
+        ax.set_ylim(bottom=0, top=max(tiempos_gr) * 1.4)
+        ax.ticklabel_format(axis='y', style='plain')
 
-        axs[i].set_xticks(eje_x + i)
-        axs[i].set_xticklabels(nombre_algoritmos)
-        # Ajusto la posición de la leyenda
-        axs[i].legend(bbox_to_anchor=(1.10, 0.5), loc='center right')
-        axs[i].set_title('Comparación de Tiempo de Análisis para {}'.format(archivo_csv))
-        axs[i].grid(True)
+        ax.set_xticks(eje_x + i)
+        ax.set_xticklabels(nombre_algoritmos)
+
+        # Ajusto la leyenda
+        legend_handles = [Rectangle((0, 0), 0, 0, color=color, label=label) for color, label in zip(colores, nombres_gr)]
+        legend_handles.append(Line2D([0], [0], color='r', label="Resultado mínimo"))
+        ax.legend(loc='upper right', handles=legend_handles, fontsize=15)
 
     plt.savefig('results_comparison_plot.png')
-    plt.show()
+
 
 def main():
     analizar_resultados_tiempo_analisis()
+
 
 main()
