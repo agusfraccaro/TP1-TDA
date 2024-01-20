@@ -1,4 +1,4 @@
-from typing import List, Tuple
+from typing import List, Tuple, Callable
 
 
 def greedy_scaloni_por_ayudante(tiempos: List[Tuple[int, int]]) -> List[Tuple[int, int]]:
@@ -36,6 +36,16 @@ def calcular_tiempo_analisis(tiempos: List[Tuple[int, int]]) -> int:
         t_scaloni += tiempo[0]
         t_final = max(t_final, t_scaloni + tiempo[1])
     return t_final
+
+
+def calcular_tiempo_analisis_completo(tiempos: List[Tuple[int, int]], algoritmo: Callable) -> int:
+    """
+    :param tiempos: lista de tuplas con los tiempos de Scaloni y ayudante (S_i, A_i)
+    :param algoritmo: algoritmo de ordenamiento utilizado para el calculo del menor tiempo
+    :return: tiempo final que tomara analizar todos los casos
+    """
+    tiempos_ordenados = algoritmo(tiempos)
+    return calcular_tiempo_analisis(tiempos_ordenados)
 
 
 ALGORITMOS = {"ayudante": greedy_scaloni_por_ayudante,
