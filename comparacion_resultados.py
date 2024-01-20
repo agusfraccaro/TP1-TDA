@@ -6,8 +6,6 @@ from matplotlib.patches import Rectangle
 from algoritmos import ALGORITMOS, calcular_tiempo_analisis_completo
 from casos.generacion_casos import generar_tamanios_comparacion, generar_casos
 
-DIRECTORIO_ARCHIVOS = "casos"
-
 
 def analizar_resultados_tiempo_analisis() -> None:
 
