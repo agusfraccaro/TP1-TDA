@@ -5,6 +5,7 @@ TAMANIO_BASICO = 10
 TAMANIO_POTENCIAS = 20
 TAMANIO_EXPANDIDO = 1000
 
+
 def _generar_tamanios(tamanio):
     return [2 ** n for n in range(1, tamanio)]
 
@@ -15,6 +16,7 @@ def generar_tamanios():
 
 def generar_tamanios_potencias():
     return _generar_tamanios(TAMANIO_POTENCIAS)
+
 
 def generar_tamanios_grande():
     return [random.randint(1, 100) for _ in range(1, TAMANIO_EXPANDIDO)]

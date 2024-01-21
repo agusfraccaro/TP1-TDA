@@ -11,7 +11,6 @@ from casos.generacion_casos import generar_tamanios_comparacion, generar_casos, 
 
 
 def graficar_comparacion_tiempos(casos: List[List[int]]) -> None:
-
     nombre_algoritmos = list(ALGORITMOS.keys())
     colores = ['tab:blue', 'tab:orange', 'tab:green']
     eje_x = np.arange(len(nombre_algoritmos))
@@ -41,7 +40,8 @@ def graficar_comparacion_tiempos(casos: List[List[int]]) -> None:
 
         rect_height = first_min_bar.get_height() - ax.get_ylim()[0]
         for bar in min_bars:
-            rect = plt.Rectangle((bar.get_x(), ax.get_ylim()[0]), bar.get_width(), rect_height, linewidth=3, edgecolor='r', facecolor='none')
+            rect = plt.Rectangle((bar.get_x(), ax.get_ylim()[0]), bar.get_width(), rect_height, linewidth=3,
+                                 edgecolor='r', facecolor='none')
             ax.add_patch(rect)
 
         # Agrego sobre cada barra su valor.
@@ -62,7 +62,8 @@ def graficar_comparacion_tiempos(casos: List[List[int]]) -> None:
         ax.set_xticklabels(nombre_algoritmos)
 
         # Ajusto la leyenda
-        legend_handles = [Rectangle((0, 0), 0, 0, color=color, label=label) for color, label in zip(colores, nombres_gr)]
+        legend_handles = [Rectangle((0, 0), 0, 0, color=color, label=label) for color, label in
+                          zip(colores, nombres_gr)]
         legend_handles.append(Line2D([0], [0], color='r', label="Resultado mínimo"))
         ax.legend(loc='upper right', handles=legend_handles, fontsize=15)
 
@@ -129,6 +130,7 @@ def analizar_resultados_tiempo_analisis() -> None:
     casos = generar_casos(tamanios)
     graficar_comparacion_tiempos(casos)
 
+
 def analizar_resultados_efectividad_potencias() -> None:
     tamanios = generar_tamanios_potencias()
     print(f"Comparando efectividad con los siguientes tamaños: {tamanios}")
@@ -143,6 +145,7 @@ def analizar_resultados_efectividad_expandido() -> None:
     casos = generar_casos(tamanios)
     efectividad_global = calcular_efectividad_global(casos, ALGORITMOS)
     graficar_efectividad(efectividad_global, "efectivity_expanded")
+
 
 def main():
     analizar_resultados_tiempo_analisis()
