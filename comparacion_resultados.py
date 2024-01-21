@@ -6,7 +6,8 @@ from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 
 from algoritmos import ALGORITMOS, calcular_tiempo_analisis_completo
-from casos.generacion_casos import generar_tamanios_comparacion, generar_casos, generar_tamanios_expandido
+from casos.generacion_casos import generar_tamanios_comparacion, generar_casos, generar_tamanios_potencias, \
+    generar_tamanios_grande
 
 
 def graficar_comparacion_tiempos(casos: List[List[int]]) -> None:
@@ -95,7 +96,7 @@ def calcular_efectividad_global(casos: List[List[int]], algoritmos: Dict[str, ca
     return efectividad_global
 
 
-def graficar_efectividad(efectividad: Dict[str, float]) -> None:
+def graficar_efectividad(efectividad: Dict[str, float], nombre_plot) -> None:
     nombres_algoritmos = list(efectividad.keys())
     porcentajes_efectividad = list(efectividad.values())
     colores = ['tab:blue', 'tab:orange', 'tab:green']
@@ -119,24 +120,34 @@ def graficar_efectividad(efectividad: Dict[str, float]) -> None:
     plt.yticks(fontsize=12)
     plt.ylim(0, 110)
 
-    plt.savefig('graficos/efectivity_comparison_plot.png')
+    plt.savefig(f'graficos/{nombre_plot}.png')
 
 
 def analizar_resultados_tiempo_analisis() -> None:
     tamanios = generar_tamanios_comparacion()
+    print(f"Comparando resultados con los siguientes tamaños: {tamanios}")
     casos = generar_casos(tamanios)
     graficar_comparacion_tiempos(casos)
 
-def analizar_resultados_efectividad() -> None:
-    tamanios = generar_tamanios_expandido()
+def analizar_resultados_efectividad_potencias() -> None:
+    tamanios = generar_tamanios_potencias()
+    print(f"Comparando efectividad con los siguientes tamaños: {tamanios}")
     casos = generar_casos(tamanios)
     efectividad_global = calcular_efectividad_global(casos, ALGORITMOS)
-    graficar_efectividad(efectividad_global)
+    graficar_efectividad(efectividad_global, "efectivity_powers_two")
 
 
+def analizar_resultados_efectividad_expandido() -> None:
+    tamanios = generar_tamanios_grande()
+    print(f"Comparando efectividad con los siguientes tamaños: {tamanios}")
+    casos = generar_casos(tamanios)
+    efectividad_global = calcular_efectividad_global(casos, ALGORITMOS)
+    graficar_efectividad(efectividad_global, "efectivity_expanded")
 
 def main():
     analizar_resultados_tiempo_analisis()
-    analizar_resultados_efectividad()
+    analizar_resultados_efectividad_expandido()
+    analizar_resultados_efectividad_potencias()
+
 
 main()
