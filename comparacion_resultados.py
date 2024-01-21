@@ -1,21 +1,21 @@
+from typing import List, Dict
+
 import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.lines import Line2D
 from matplotlib.patches import Rectangle
 
 from algoritmos import ALGORITMOS, calcular_tiempo_analisis_completo
-from casos.generacion_casos import generar_tamanios_comparacion, generar_casos
+from casos.generacion_casos import generar_tamanios_comparacion, generar_casos, generar_tamanios_expandido
 
 
-def analizar_resultados_tiempo_analisis() -> None:
+def graficar_comparacion_tiempos(casos: List[List[int]]) -> None:
 
     nombre_algoritmos = list(ALGORITMOS.keys())
     colores = ['tab:blue', 'tab:orange', 'tab:green']
     eje_x = np.arange(len(nombre_algoritmos))
     bar_width = 0.3
     cant_columnas = 2
-    tamanios = generar_tamanios_comparacion()
-    casos = generar_casos(tamanios)
 
     fig, (axs) = plt.subplots(len(casos) // cant_columnas, cant_columnas, figsize=(35, 25))
     plt.subplots_adjust(hspace=0.3, wspace=0.3)
@@ -65,11 +65,78 @@ def analizar_resultados_tiempo_analisis() -> None:
         legend_handles.append(Line2D([0], [0], color='r', label="Resultado mínimo"))
         ax.legend(loc='upper right', handles=legend_handles, fontsize=15)
 
-    plt.savefig('results_comparison_plot.png')
+    plt.savefig('graficos/results_comparison_plot.png')
+
+
+def calcular_efectividad_global(casos: List[List[int]], algoritmos: Dict[str, callable]) -> Dict[str, float]:
+    efectividad_global = {nombre: 0.0 for nombre in algoritmos.keys()}
+
+    for caso in casos:
+        tiempos_algoritmos = {
+            nombre: calcular_tiempo_analisis_completo(caso.copy(), algoritmo)
+            for nombre, algoritmo in algoritmos.items()
+        }
+
+        mejores_algoritmos = [
+            algoritmo for algoritmo, tiempo in tiempos_algoritmos.items()
+            if tiempo == min(tiempos_algoritmos.values())
+        ]
+
+        print(tiempos_algoritmos)
+        for nombre in mejores_algoritmos:
+            efectividad_global[nombre] += 1.0
+
+    total_casos = len(casos)
+    efectividad_global = {
+        nombre: (efectividad / total_casos) * 100.0
+        for nombre, efectividad in efectividad_global.items()
+    }
+
+    return efectividad_global
+
+
+def graficar_efectividad(efectividad: Dict[str, float]) -> None:
+    nombres_algoritmos = list(efectividad.keys())
+    porcentajes_efectividad = list(efectividad.values())
+    colores = ['tab:blue', 'tab:orange', 'tab:green']
+
+    plt.figure(figsize=(10, 6))
+    bars = plt.bar(nombres_algoritmos, porcentajes_efectividad, color=colores)
+
+    for bar in bars:
+        plt.text(
+            bar.get_x() + bar.get_width() / 2, bar.get_height() + 0.5,
+            f'{bar.get_height():.2f}%',
+            ha='center',
+            va='bottom',
+            fontsize=12
+        )
+
+    plt.xlabel('Algoritmo utilizado', fontsize=14, weight='bold')
+    plt.ylabel('Porcentaje de efectividad', fontsize=14, weight='bold')
+    plt.title('Porcentaje de efectividad de cada algoritmo', fontsize=16, weight='bold')
+    plt.xticks(fontsize=12)
+    plt.yticks(fontsize=12)
+    plt.ylim(0, 110)
+
+    plt.savefig('graficos/efectivity_comparison_plot.png')
+
+
+def analizar_resultados_tiempo_analisis() -> None:
+    tamanios = generar_tamanios_comparacion()
+    casos = generar_casos(tamanios)
+    graficar_comparacion_tiempos(casos)
+
+def analizar_resultados_efectividad() -> None:
+    tamanios = generar_tamanios_expandido()
+    casos = generar_casos(tamanios)
+    efectividad_global = calcular_efectividad_global(casos, ALGORITMOS)
+    graficar_efectividad(efectividad_global)
+
 
 
 def main():
     analizar_resultados_tiempo_analisis()
-
+    analizar_resultados_efectividad()
 
 main()

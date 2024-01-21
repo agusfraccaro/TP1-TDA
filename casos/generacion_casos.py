@@ -2,10 +2,10 @@ import random
 from typing import List, Tuple
 
 TAMANIO_BASICO = 10
-TAMANIO_EXPANDIDO = 100
+TAMANIO_EXPANDIDO = 20
 
-def _generar_tamanios():
-    return [2 ** n for n in range(1, 100)]
+def _generar_tamanios(tamanio):
+    return [2 ** n for n in range(1, tamanio)]
 
 
 def generar_tamanios():
@@ -17,7 +17,7 @@ def generar_tamanios_expandido():
 
 
 def generar_tamanios_comparacion():
-    return [3, 50, 1500, 250000]
+    return [3, 50, 100, 200, 1500, 250000]
 
 
 def generar_tiempos_n_rivales(n: int) -> List[Tuple[int, int]]:

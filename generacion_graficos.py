@@ -35,7 +35,7 @@ def main():
     plt.xlabel('Tamaño del set de datos (N)')
     plt.title('Complejidad algorítmica')
     plt.legend()
-    plt.savefig('time_complexity_plot.png')
+    plt.savefig('graficos/time_complexity_plot.png')
 
 
 main()
