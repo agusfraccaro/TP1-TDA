@@ -1,4 +1,12 @@
-# greedy-scaloni
+# Teoria de Algoritmos - Buchwald
+
+Trabajo Práctico 1: Algoritmos Greedy
+
+## Integrantes
+* Emanuel Pelozo 99444
+* Agustina Fraccaro 103199
+* Agustina Schmidt 103409
+* Matias Gonzalez 104913
 
 ## Dependencias
 
