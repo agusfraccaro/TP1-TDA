@@ -12,7 +12,7 @@ SI3 = [76,47,39,22,10]
 
 
 def main():
-    soluciones = pd_entrenamientos(SI3, EI3)
+    soluciones = pd_entrenamientos(SI2, EI2)
 
     imprimir_matriz(soluciones)
 
