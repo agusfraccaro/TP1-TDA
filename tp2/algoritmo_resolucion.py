@@ -31,6 +31,3 @@ def pd_entrenamientos(si, ei):
             soluciones[dias_disponibles_para_entrenar-1][dias_seguidos_entrenando] = ganancia
 
     return soluciones
-
-def obtener_columna(matriz, numero_columna):
-    return [fila[numero_columna] for fila in matriz]
