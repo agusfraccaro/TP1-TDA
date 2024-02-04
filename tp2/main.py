@@ -1,18 +1,40 @@
 from algoritmo_resolucion import pd_entrenamientos
 from utilidades.utils import imprimir_matriz
+import argparse
 
-SI = [10, 8, 6, 4, 2, 1]
-EI = [2, 5, 3, 6, 8, 2]
+def parsear_argumentos():
+    """
+    :return: path del archivo
+    """
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-p", "--path", help="Ruta al archivo de tiempos", required=True)
+    args = parser.parse_args()
+    path = args.path
 
-SI2 = [63,61,49,41,40,38,23,17,13,10]
-EI2 = [36,2,78,19,59,79,65,64,33,41]
+    return path
 
-EI3 = [67,8,12,34,6]
-SI3 = [76,47,39,22,10]
+def cargar_datos(path: str):
+    """
+    :param path: path del archivo con los tiempos en formato Si,Ai
+    :return: lista de tuplas con los tiempos de Scaloni y ayudante (S_i, A_i)
+    """
+    with open(path, "r") as archivo:
+        lineas = archivo.readlines()
+        energias = []
+        esfuerzos = []
+        for linea in lineas[1:]:
+            t_i = linea.strip().split(',')
+            esfuerzos.append(int(t_i[0]))
+            energias.append(int(t_i[1]))
 
+    return esfuerzos, energias
 
 def main():
-    soluciones = pd_entrenamientos(SI2, EI2)
+    path = parsear_argumentos()
+    EI, SI = cargar_datos(path)
+    print(SI)
+    print(EI)
+    soluciones = pd_entrenamientos(SI, EI)
 
     imprimir_matriz(soluciones)
 
