@@ -24,7 +24,6 @@ def pd_entrenamientos(si, ei):
             if dias_seguidos_entrenando == 0:
                 if dias_disponibles_para_entrenar > 2:
                     # -3 porque el for de dias disponibles esta numerado de 1..n
-                    #ganancia_anterior = max(soluciones[dias_disponibles_para_entrenar - 3])
                     ganancia_anterior = mejores_ganancias_en_conjunto_dias[dias_disponibles_para_entrenar - 3]
 
             else:
