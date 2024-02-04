@@ -7,7 +7,7 @@ def pd_entrenamientos(si, ei):
 
         for dias_seguidos_entrenando in range(0, len(si)):
 
-            if (dias_seguidos_entrenando > dias_disponibles_para_entrenar-1):
+            if dias_seguidos_entrenando > dias_disponibles_para_entrenar-1:
                 break
 
             ganancia_para_energia_actual = min(
@@ -19,12 +19,12 @@ def pd_entrenamientos(si, ei):
             ganancia_anterior = 0
 
             if dias_seguidos_entrenando == 0:
-                if (dias_disponibles_para_entrenar > 2):
-                    # -3 porque los fors estan numerados de 1..n
+                if dias_disponibles_para_entrenar > 2:
+                    # -3 porque el for de dias disponibles esta numerado de 1..n
                     ganancia_anterior = max(soluciones[dias_disponibles_para_entrenar - 3])
 
             else:
-                # -2 porque los fors estan numerados de 1..n
+                # -2 porque el for de dias disponibles esta numerado de 1..n
                 ganancia_anterior = soluciones[dias_disponibles_para_entrenar - 2][dias_seguidos_entrenando - 1]
 
             ganancia = ganancia_anterior + ganancia_para_energia_actual
