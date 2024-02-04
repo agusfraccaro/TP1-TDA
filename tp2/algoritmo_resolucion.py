@@ -1,7 +1,7 @@
 
 def pd_entrenamientos(si, ei):
 
-    soluciones = [([0] * len(ei)) for i in range(len(ei))]
+    soluciones = [([0] * len(ei)) for _ in range(len(ei))]
 
     for dias_disponibles_para_entrenar in range(1, len(ei) + 1):
 
