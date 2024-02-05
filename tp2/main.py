@@ -1,4 +1,4 @@
-from algoritmo_resolucion import pd_entrenamientos
+from algoritmo_resolucion import pd_entrenamientos, pd_reconstruccion
 from utilidades.utils import imprimir_matriz
 import argparse
 
@@ -35,8 +35,10 @@ def main():
     print(SI)
     print(EI)
     soluciones = pd_entrenamientos(SI, EI)
-
     imprimir_matriz(soluciones)
+
+    reconstruccion = pd_reconstruccion(soluciones)    
+    print('Conjunto de dias optimos para entrenar:', reconstruccion)
 
 if __name__ == "__main__":
     main()

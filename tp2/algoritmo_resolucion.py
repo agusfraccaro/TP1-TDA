@@ -39,3 +39,37 @@ def pd_entrenamientos(si, ei):
         mejores_ganancias_en_conjunto_dias.append(mejor_ganancia_actual)
 
     return soluciones
+
+def pd_reconstruccion(soluciones):
+    filas = len(soluciones)
+    columnas = len(soluciones[0])
+
+    dias_entrenados = []
+    dias_consecutivos_por_visitar = -1
+
+    for i in range(filas - 1, -1, -1):
+
+        if dias_consecutivos_por_visitar == 0:   
+            # El dia siguiente no se entrena pues son 0 los dias consecutivos
+            print('Dia {} no se entrena'.format(i + 1))
+            dias_consecutivos_por_visitar = -1
+            continue
+        else:
+            if dias_consecutivos_por_visitar == -1:
+                # Busco la mayor ganancia para saber cuantos dias consecutivos se entrena
+                ganancia_maxima_de_la_fila = float('-inf')
+                for j in range(columnas - 1, -1, -1):   
+                    if soluciones[i][j] > ganancia_maxima_de_la_fila:
+                        ganancia_maxima_de_la_fila = soluciones[i][j]
+                        dias_consecutivos_por_visitar = j
+                
+                print('Ganancia maxima del dia {}: {}'.format(i + 1, ganancia_maxima_de_la_fila))
+                print('Dias consecutivos a entrenar: {}'.format(dias_consecutivos_por_visitar))
+            else:
+                # Ya se que dias consecutivos se entrena
+                dias_consecutivos_por_visitar -= 1
+                print('Ganancia del dia {}: {}'.format(i + 1, soluciones[i][dias_consecutivos_por_visitar]))
+            
+            dias_entrenados.append(i + 1)
+           
+    return sorted(dias_entrenados)
