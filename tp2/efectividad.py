@@ -16,7 +16,7 @@ def efectividad(nombre_archivo):
 
 def main():
     #Lista de nombres de archivos
-    archivos = ["2_elem","2_elem_v2", "5_elem", "10_elem", "15_elem"]
+    archivos = ["2_elem","2_elem_v2","3_elem","5_elem", "5_elem_v2", "10_elem", "15_elem"]
     resultados = []
     for archivo in archivos:
         resultados.append(efectividad(archivo))
