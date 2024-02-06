@@ -19,6 +19,17 @@ def generar_experimentos(tamanios, cantidad_experimentos):
     return experimentos
 
 
+def generar_experimentos_peor_caso(tamanios):
+    experimentos = []
+    for tamanio in tamanios:
+        ei = [tamanio * 10] * tamanio
+        si = list(range(tamanio, 0, -1))
+        si[0] = tamanio * 10
+        experimentos.append([ei, si])
+
+    return experimentos
+
+
 def normalizar(data):
     min_val = min(data)
     max_val = max(data)
@@ -37,7 +48,38 @@ def generar_grafico(tamanios, curves, labels, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
 
 
+def complejidad_peor_caso():
+    tamanios = range(2, 2 ** 10, 8)
+    experimentos = generar_experimentos_peor_caso(tamanios)
+
+    t_total = []
+    t_entrenamientos = []
+    t_reconstruccion = []
+
+    for caso in experimentos:
+        start = time.time()
+        soluciones = pd_entrenamientos(caso[1], caso[0])
+        t_entrenamientos.append(time.time() - start)
+        start_reconstruccion = time.time()
+        pd_reconstruccion(soluciones)
+        t_reconstruccion.append(time.time() - start_reconstruccion)
+        t_total.append(time.time() - start)
+
+    n_al_cuadrado = normalizar([n ** 2 for n in tamanios])
+    t_reconstruccion = normalizar(t_reconstruccion)
+    t_entrenamientos = normalizar(t_entrenamientos)
+    t_total = normalizar(t_total)
+    generar_grafico(tamanios, [t_reconstruccion, n_al_cuadrado], ['Complejidad algorítmica reconstrucción', 'n^2'],
+                    'Tiempo de ejecución reconstrucción para el peor caso', 'graficos/complejidad_reconstruccion_peor_caso.png')
+    generar_grafico(tamanios, [t_entrenamientos, n_al_cuadrado], ['Complejidad algorítmica entrenamientos', 'n^2'],
+                    'Tiempo de ejecución entrenamientos para el peor caso', 'graficos/complejidad_entrenamientos_peor_caso.png')
+    generar_grafico(tamanios, [t_total, n_al_cuadrado], ['Complejidad algorítmica total', 'n^2'],
+                    'Tiempo de ejecución total para el peor caso', 'graficos/complejidad_total_peor_caso.png')
+
 def main():
+    complejidad_peor_caso()
+    return
+
     random.seed(42)
     tamanios = range(2, 2 ** 10, 8)
     experimentos = generar_experimentos(tamanios, 10)
