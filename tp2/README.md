@@ -13,10 +13,21 @@ Trabajo Práctico 2: Algoritmos de Programación dinámica
 * Python >= 3.10
 * pip >= 22.0
 
-## Instalación
+## Ejecución
 
 ```bash
-make deps
+python3 main.py -p <path>
 ```
 
-## Ejecución
+Siendo path la ubicación del archivo del caso que querramos probar.
+
+Ejemplo: 
+
+```bash
+python3 main.py -p casos/10_elem.csv
+```
+
+Para ejecutar la prueba de efectividad:
+```bash
+python3 efectividad.py
+```
