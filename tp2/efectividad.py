@@ -22,6 +22,6 @@ def main():
         resultados.append(efectividad(archivo))
 
     porcentaje_efectividad = (resultados.count(True) / len(resultados)) * 100
-    print(porcentaje_efectividad)
+    print("\nPorcentaje de efectividad: "+str(porcentaje_efectividad)+"%")
 
 main()
