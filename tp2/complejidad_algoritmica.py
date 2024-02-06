@@ -60,9 +60,8 @@ def generar_grafico(tamanios, curves, labels, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
 
 
-def complejidad_mejor_caso():
-    tamanios = range(2, 2 ** 10, 8)
-    experimentos = generar_mejor_caso(tamanios, 10)
+def complejidad_mejor_caso(tamanios, cantidad_experimentos):
+    experimentos = generar_mejor_caso(tamanios, cantidad_experimentos)
 
     t_total = []
     t_entrenamientos = []
@@ -102,8 +101,7 @@ def complejidad_mejor_caso():
                     'Tiempo de ejecución total para el mejor caso', 'graficos/complejidad_total_mejor_caso.png')
 
 
-def complejidad_peor_caso():
-    tamanios = range(2, 2 ** 10, 8)
+def complejidad_peor_caso(tamanios):
     experimentos = generar_peor_caso(tamanios)
 
     t_total = []
@@ -134,12 +132,14 @@ def complejidad_peor_caso():
 
 
 def main():
-    complejidad_mejor_caso()
-    return
-
     random.seed(42)
     tamanios = range(2, 2 ** 10, 8)
-    experimentos = generar_experimentos(tamanios, 10)
+    cantidad_experimentos = 10
+
+    complejidad_mejor_caso(tamanios, cantidad_experimentos)
+    complejidad_peor_caso(tamanios)
+
+    experimentos = generar_experimentos(tamanios, cantidad_experimentos)
     t_total = []
     t_entrenamientos = []
     t_reconstruccion = []
