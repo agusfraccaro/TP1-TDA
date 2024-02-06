@@ -38,7 +38,12 @@ def pd_entrenamientos(si, ei):
 
         mejores_ganancias_en_conjunto_dias.append(mejor_ganancia_actual)
 
+    print(
+        f"La mejor ganancia que se puede obtener entrenando es: {mejores_ganancias_en_conjunto_dias[-1]}"
+    )
+
     return soluciones
+
 
 def pd_reconstruccion(soluciones):
     filas = len(soluciones)
@@ -63,13 +68,13 @@ def pd_reconstruccion(soluciones):
                         ganancia_maxima_de_la_fila = soluciones[i][j]
                         dias_consecutivos_por_visitar = j
                 
-                print('Ganancia maxima del dia {}: {}'.format(i + 1, ganancia_maxima_de_la_fila))
-                print('Dias consecutivos a entrenar: {}'.format(dias_consecutivos_por_visitar))
+                #print('Ganancia maxima del dia {}: {}'.format(i + 1, ganancia_maxima_de_la_fila))
+                #print('Dias consecutivos a entrenar: {}'.format(dias_consecutivos_por_visitar))
             else:
                 # Ya se que dias consecutivos se entrena
                 dias_consecutivos_por_visitar -= 1
-                print('Ganancia del dia {}: {}'.format(i + 1, soluciones[i][dias_consecutivos_por_visitar]))
+                #print('Ganancia del dia {}: {}'.format(i + 1, soluciones[i][dias_consecutivos_por_visitar]))
             
             dias_entrenados.append(i + 1)
            
-    return sorted(dias_entrenados)
+    return list(reversed(dias_entrenados))

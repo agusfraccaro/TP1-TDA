@@ -15,8 +15,9 @@ def parsear_argumentos():
 
 def cargar_datos(path: str):
     """
-    :param path: path del archivo con los tiempos en formato Si,Ai
-    :return: lista de tuplas con los tiempos de Scaloni y ayudante (S_i, A_i)
+    :param path: path del archivo con los tiempos en formato Ei,Si
+    :return: lista de tuplas con las energias necesarias para los entrenamientos
+    y la energia disponible en el dia de entrenamiento (E_i, S_i)
     """
     with open(path, "r") as archivo:
         lineas = archivo.readlines()
@@ -31,10 +32,10 @@ def cargar_datos(path: str):
 
 def main():
     path = parsear_argumentos()
-    EI, SI = cargar_datos(path)
-    print(SI)
-    print(EI)
-    soluciones = pd_entrenamientos(SI, EI)
+    ei, si = cargar_datos(path)
+    print(f"Si: {si}")
+    print(f"Ei: {ei}")
+    soluciones = pd_entrenamientos(si, ei)
     imprimir_matriz(soluciones)
 
     reconstruccion = pd_reconstruccion(soluciones)    
