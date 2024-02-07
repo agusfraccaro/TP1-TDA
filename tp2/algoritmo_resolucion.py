@@ -56,7 +56,6 @@ def pd_reconstruccion(soluciones):
 
         if dias_consecutivos_por_visitar == 0:   
             # El dia siguiente no se entrena pues son 0 los dias consecutivos
-            print('Dia {} no se entrena'.format(i + 1))
             dias_consecutivos_por_visitar = -1
             continue
         else:
@@ -67,13 +66,9 @@ def pd_reconstruccion(soluciones):
                     if soluciones[i][j] > ganancia_maxima_de_la_fila:
                         ganancia_maxima_de_la_fila = soluciones[i][j]
                         dias_consecutivos_por_visitar = j
-                
-                #print('Ganancia maxima del dia {}: {}'.format(i + 1, ganancia_maxima_de_la_fila))
-                #print('Dias consecutivos a entrenar: {}'.format(dias_consecutivos_por_visitar))
             else:
                 # Ya se que dias consecutivos se entrena
                 dias_consecutivos_por_visitar -= 1
-                #print('Ganancia del dia {}: {}'.format(i + 1, soluciones[i][dias_consecutivos_por_visitar]))
             
             dias_entrenados.append(i + 1)
            
