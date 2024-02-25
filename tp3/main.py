@@ -1,5 +1,3 @@
-from algoritmo_resolucion import pd_entrenamientos, pd_reconstruccion
-from utilidades.utils import imprimir_matriz
 import argparse
 
 def parsear_argumentos():
