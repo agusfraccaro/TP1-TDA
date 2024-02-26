@@ -1,5 +1,8 @@
 import argparse
 
+from algoritmo_backtracking import jugadores_prensa
+
+
 def parsear_argumentos():
     """
     :return: path del archivo
@@ -29,6 +32,13 @@ def cargar_datos(path: str):
 def main():
     path = parsear_argumentos()
     pedidos_prensa = cargar_datos(path)
+
+    print(f"Pedidos de la prensa: {pedidos_prensa}")
+
+    mejor_solucion = []
+    jugadores_prensa(pedidos_prensa, [], 0, mejor_solucion)
+
+    print(f"Mejor solución: {mejor_solucion}")
 
 if __name__ == "__main__":
     main()
