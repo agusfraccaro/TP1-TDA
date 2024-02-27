@@ -1,6 +1,7 @@
 import argparse
 
 from algoritmo_backtracking import jugadores_prensa
+from algoritmo_greedy import (jugadores_prensa_greedy)
 
 
 def parsear_argumentos():
@@ -35,10 +36,11 @@ def main():
 
     print(f"Pedidos de la prensa: {pedidos_prensa}")
 
-    mejor_solucion = []
-    jugadores_prensa(pedidos_prensa, [], 0, mejor_solucion)
-
-    print(f"Mejor solución: {mejor_solucion}")
+    solucion_bt = []
+    jugadores_prensa(pedidos_prensa, [], 0, solucion_bt)
+    solucion_greedy = jugadores_prensa_greedy(pedidos_prensa)
+    print(f"Mejor solución bt: {solucion_bt}")
+    print(f"Mejor solución greedy: {solucion_greedy}")
 
 if __name__ == "__main__":
     main()
