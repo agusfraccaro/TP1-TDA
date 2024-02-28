@@ -25,7 +25,6 @@ def mapear_pedidos_cubiertos(pedidos_prensa):
 def actualizar_pedidos_cubiertos_por_jugador(pedidos_cubiertos, jugador):
     nuevos_pedidos_cubiertos = 0
 
-    print(pedidos_cubiertos)
     for idx in range(len(pedidos_cubiertos)):
         if pedidos_cubiertos[idx][0]:
             continue
@@ -58,6 +57,11 @@ def jugadores_prensa_greedy(pedidos_prensa):
         pedidos_cubiertos_con_nuevo_jugador = actualizar_pedidos_cubiertos_por_jugador(
             pedidos_cubiertos, jugador_con_mas_apariciones
         )
+
+        # Para el caso donde el siguiente jugador con más apariciones solo cubra casos que ya se encontraban cubiertos
+        if not pedidos_cubiertos_con_nuevo_jugador:
+            continue
+
 
         pedidos_sin_cubrir -= pedidos_cubiertos_con_nuevo_jugador
         solucion.append(jugador_con_mas_apariciones)
