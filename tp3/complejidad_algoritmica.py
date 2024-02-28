@@ -40,9 +40,9 @@ def generar_grafico(tamanios, curves, labels, titulo, nombre_archivo):
     plt.savefig(nombre_archivo)
 
 
-def main():
+def comparar_complejidad():
     N = range(2, 75)
-    tamanios = [(n, math.floor(n/2)) for n in N]
+    tamanios = [(n, math.floor(n / 2)) for n in N]
     cantidad_experimentos = 40
     probabilidad = 0.5
     experimentos = generar_experimentos(tamanios, cantidad_experimentos, probabilidad)
@@ -76,6 +76,39 @@ def main():
         'Complejidad algorítmica',
         'complejidad_algoritmica.png'
     )
+
+
+def comparar_resultados():
+    tamanios = [(20, 10)]
+    cantidad_experimentos = 10
+    probabilidad = 0.15
+    experimentos = generar_experimentos(tamanios, cantidad_experimentos, probabilidad)
+
+    soluciones_bt = []
+    soluciones_gr = []
+    for experimento in experimentos:
+        for caso in experimento:
+            bt = []
+            jugadores_prensa(caso, [], 0, bt)
+            soluciones_bt.append(len(bt))
+            soluciones_gr.append(len(jugadores_prensa_greedy(caso)))
+
+    plt.figure()
+    plt.plot(soluciones_bt, marker='o', label='Backtracking', linewidth=0.5, markersize=2)
+    plt.plot(soluciones_gr, marker='o', label='Greedy', linewidth=0.5, markersize=2)
+    plt.xlabel('Experimento')
+    plt.ylabel('Cantidad de jugadores')
+    plt.title('Comparación de resultados')
+    plt.legend()
+    plt.savefig('comparacion_resultados.png')
+
+
+def main():
+    # Complejidad
+    comparar_complejidad()
+
+    # Resultados
+    comparar_resultados()
 
 
 if __name__ == '__main__':
