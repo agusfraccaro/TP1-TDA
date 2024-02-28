@@ -81,7 +81,7 @@ def comparar_complejidad():
 def comparar_resultados():
     tamanios = [(20, 10)]
     cantidad_experimentos = 10
-    probabilidad = 0.15
+    probabilidad = 0.25
     experimentos = generar_experimentos(tamanios, cantidad_experimentos, probabilidad)
 
     soluciones_bt = []
@@ -105,7 +105,7 @@ def comparar_resultados():
 
 def main():
     # Complejidad
-    comparar_complejidad()
+    # comparar_complejidad()
 
     # Resultados
     comparar_resultados()
