@@ -6,7 +6,7 @@ def es_eleccion_valida(solucion, pedidos_prensa):
     return True
 
 # Verifica si el pedido de una prensa está en la solución
-def esta_en_solucion(pedido, solucion):
+def esta_en_solucion(solucion, pedido):
     return any(jugador in pedido for jugador in solucion)
 
 # Obtiene el conjunto mínimo de jugadores para satisfacer a toda la prensa

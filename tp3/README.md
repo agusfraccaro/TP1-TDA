@@ -12,3 +12,17 @@ Trabajo Práctico 3: Problemas NP-Completos
 
 * Python >= 3.10
 * pip >= 22.0
+
+## Ejecución
+
+```bash
+python3 main.py -p <path>
+```
+
+Siendo path la ubicación del archivo del caso que querramos probar.
+
+Ejemplo: 
+
+```bash
+python3 main.py -p casos/15.txt
+```
