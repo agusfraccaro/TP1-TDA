@@ -59,8 +59,8 @@ def jugadores_prensa_greedy(pedidos_prensa):
         )
 
         # Para el caso donde el siguiente jugador con más apariciones solo cubra casos que ya se encontraban cubiertos
-        if not pedidos_cubiertos_con_nuevo_jugador:
-            continue
+        #if not pedidos_cubiertos_con_nuevo_jugador:
+         #   continue
 
 
         pedidos_sin_cubrir -= pedidos_cubiertos_con_nuevo_jugador
