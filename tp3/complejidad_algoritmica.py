@@ -41,40 +41,56 @@ def generar_grafico(tamanios, curves, labels, titulo, nombre_archivo):
 
 
 def comparar_complejidad():
-    N = range(2, 75)
+    N = range(2, 30)
     tamanios = [(n, math.floor(n / 2)) for n in N]
-    cantidad_experimentos = 40
-    probabilidad = 0.5
-    experimentos = generar_experimentos(tamanios, cantidad_experimentos, probabilidad)
+    cantidad_experimentos = 100
+    probabilidades = [0.2, 0.5, 1]
+    sets = [generar_experimentos(tamanios, cantidad_experimentos, p) for p in probabilidades]
 
     t_bt = []
     t_gr = []
-    for experimento in experimentos:
-        _t_bt = 0
-        _t_gr = 0
-        for caso in experimento:
-            t_start = time.time()
-            jugadores_prensa(caso, [], 0, [])
-            t_end = time.time()
-            _t_bt += t_end - t_start
+    t_2_power_n = normalizar([2 ** n for n in N])
+    t_n_power_2 = normalizar([n ** 2 for n in N])
 
-            t_start = time.time()
-            jugadores_prensa_greedy(caso)
-            t_end = time.time()
-            _t_gr += t_end - t_start
+    for experimentos in sets:
+        _t_bt = []
+        _t_gr = []
+        for experimento in experimentos:
+            _t_bt_sum = 0
+            _t_gr_sum = 0
+            for caso in experimento:
+                t_start = time.time()
+                jugadores_prensa(caso, [], 0, [])
+                t_end = time.time()
+                _t_bt_sum += t_end - t_start
 
-        t_bt.append(_t_bt / len(experimento))
-        t_gr.append(_t_gr / len(experimento))
+                t_start = time.time()
+                jugadores_prensa_greedy(caso)
+                t_end = time.time()
+                _t_gr_sum += t_end - t_start
 
-    t_bt = normalizar(t_bt)
-    t_gr = normalizar(t_gr)
+            _t_bt.append(_t_bt_sum / len(experimento))
+            _t_gr.append(_t_gr_sum / len(experimento))
+
+        _t_bt = normalizar(_t_bt)
+        _t_gr = normalizar(_t_gr)
+        t_bt.append(_t_bt)
+        t_gr.append(_t_gr)
 
     generar_grafico(
         N,
-        [t_bt, t_gr],
-        ['Backtracking', 'Greedy'],
-        'Complejidad algorítmica',
-        'complejidad_algoritmica.png'
+        [t for t in t_bt] + [t_2_power_n],
+        [f'p={i}' for i in probabilidades] + ['2^n'],
+        'Complejidad algorítmica backtracking',
+        'complejidad_algoritmica_backtracking.png'
+    )
+
+    generar_grafico(
+        N,
+        [t for t in t_gr] + [t_n_power_2],
+        [f'p={i}' for i in probabilidades] + ['n^2'],
+        'Complejidad algorítmica greedy',
+        'complejidad_algoritmica_greedy.png'
     )
 
 
@@ -105,10 +121,10 @@ def comparar_resultados():
 
 def main():
     # Complejidad
-    # comparar_complejidad()
+    comparar_complejidad()
 
     # Resultados
-    comparar_resultados()
+    # comparar_resultados()
 
 
 if __name__ == '__main__':
