@@ -43,14 +43,14 @@ def generar_grafico(tamanios, curves, labels, titulo, nombre_archivo):
 def comparar_complejidad():
     N = range(2, 30)
     tamanios = [(n, math.floor(n / 2)) for n in N]
-    cantidad_experimentos = 100
-    probabilidades = [0.2, 0.5, 1]
+    cantidad_experimentos = 200
+    probabilidades = [0.1, 0.5, 1]
     sets = [generar_experimentos(tamanios, cantidad_experimentos, p) for p in probabilidades]
 
     t_bt = []
     t_gr = []
-    t_2_power_n = normalizar([2 ** n for n in N])
-    t_n_power_2 = normalizar([n ** 2 for n in N])
+    t_n_m_2_power_n = normalizar([n * (math.floor(n / 2)) * 2 ** n for n in N])
+    t_n_power_2 = normalizar([(n ** 2) for n in N])
 
     for experimentos in sets:
         _t_bt = []
@@ -79,8 +79,8 @@ def comparar_complejidad():
 
     generar_grafico(
         N,
-        [t for t in t_bt] + [t_2_power_n],
-        [f'p={i}' for i in probabilidades] + ['2^n'],
+        [t for t in t_bt] + [t_n_m_2_power_n],
+        [f'p={i}' for i in probabilidades] + ['n*m*2^n'],
         'Complejidad algorítmica backtracking',
         'complejidad_algoritmica_backtracking.png'
     )
@@ -95,9 +95,9 @@ def comparar_complejidad():
 
 
 def comparar_resultados():
-    tamanios = [(20, 10)]
-    cantidad_experimentos = 10
-    probabilidad = 0.25
+    tamanios = [(30, 15)]
+    cantidad_experimentos = 21
+    probabilidad = 0.3
     experimentos = generar_experimentos(tamanios, cantidad_experimentos, probabilidad)
 
     soluciones_bt = []
@@ -124,7 +124,7 @@ def main():
     comparar_complejidad()
 
     # Resultados
-    # comparar_resultados()
+    comparar_resultados()
 
 
 if __name__ == '__main__':
