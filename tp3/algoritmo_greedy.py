@@ -25,7 +25,6 @@ def mapear_pedidos_cubiertos(pedidos_prensa):
 def actualizar_pedidos_cubiertos_por_jugador(pedidos_cubiertos, jugador):
     nuevos_pedidos_cubiertos = 0
 
-    #print(pedidos_cubiertos)
     for idx in range(len(pedidos_cubiertos)):
         if pedidos_cubiertos[idx][0]:
             continue
