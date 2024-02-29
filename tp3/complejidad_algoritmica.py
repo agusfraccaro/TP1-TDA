@@ -51,6 +51,7 @@ def comparar_complejidad():
     t_gr = []
     t_n_m_2_power_n = normalizar([n * (math.floor(n / 2)) * 2 ** n for n in N])
     t_n_power_2 = normalizar([(n ** 2) for n in N])
+    t_m_n_power_2 = normalizar([math.floor(n / 2) * (n ** 2) for n in N])
 
     for experimentos in sets:
         _t_bt = []
@@ -87,8 +88,8 @@ def comparar_complejidad():
 
     generar_grafico(
         N,
-        [t for t in t_gr] + [t_n_power_2],
-        [f'p={i}' for i in probabilidades] + ['n^2'],
+        [t for t in t_gr] + [t_n_power_2, t_m_n_power_2],
+        [f'p={i}' for i in probabilidades] + ['n^2', 'm*n^2'],
         'Complejidad algorítmica greedy',
         'complejidad_algoritmica_greedy.png'
     )
