@@ -2,6 +2,7 @@ import argparse
 
 from algoritmo_backtracking import jugadores_prensa
 from algoritmo_greedy import (jugadores_prensa_greedy)
+from validacion import hitting_set_is_valid
 
 
 def parsear_argumentos():
@@ -33,6 +34,7 @@ def cargar_datos(path: str):
 def main():
     path = parsear_argumentos()
     pedidos_prensa = cargar_datos(path)
+    pedidos_prensa_validacion = pedidos_prensa.copy()
 
     print(f"Pedidos de la prensa: {pedidos_prensa}")
 
@@ -40,7 +42,12 @@ def main():
     jugadores_prensa(pedidos_prensa, [], 0, solucion_bt)
     solucion_greedy = jugadores_prensa_greedy(pedidos_prensa)
     print(f"Mejor solución bt: {solucion_bt}")
+    hitting_set_is_valid(pedidos_prensa_validacion, solucion_bt)
+
     print(f"Mejor solución greedy: {solucion_greedy}")
+    hitting_set_is_valid(pedidos_prensa_validacion, solucion_greedy)
+
+
 
 if __name__ == "__main__":
     main()
