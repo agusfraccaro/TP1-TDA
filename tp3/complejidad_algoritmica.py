@@ -82,7 +82,7 @@ def comparar_complejidad():
         [t for t in t_bt] + [t_n_m_2_power_n],
         [f'p={i}' for i in probabilidades] + ['n*m*2^n'],
         'Complejidad algorítmica backtracking',
-        'complejidad_algoritmica_backtracking.png'
+        'graficos/complejidad_algoritmica_backtracking.png'
     )
 
     generar_grafico(
@@ -90,7 +90,7 @@ def comparar_complejidad():
         [t for t in t_gr] + [t_n_power_2],
         [f'p={i}' for i in probabilidades] + ['n^2'],
         'Complejidad algorítmica greedy',
-        'complejidad_algoritmica_greedy.png'
+        'graficos/complejidad_algoritmica_greedy.png'
     )
 
 
@@ -116,7 +116,7 @@ def comparar_resultados():
     plt.ylabel('Cantidad de jugadores')
     plt.title('Comparación de resultados')
     plt.legend()
-    plt.savefig('comparacion_resultados.png')
+    plt.savefig('graficos/comparacion_resultados.png')
 
 
 def main():

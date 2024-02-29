@@ -1,8 +1,6 @@
 def jugador_esta_en_pedido(jugador, pedido):
     for jugador_pedido in pedido:
-        #print(f"Jugador evaluado: {jugador_pedido} - pedido evaluado: {pedido}")
         if jugador_pedido == jugador:
-            #print(f"Jugador está en pedido: {jugador_pedido} - Jugador: {jugador}")
             return True
     return False
 
