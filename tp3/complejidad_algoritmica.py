@@ -49,7 +49,7 @@ def comparar_complejidad():
 
     t_bt = []
     t_gr = []
-    t_m_2_power_n = normalizar([(math.floor(n / 2)) * 2 ** n for n in N])
+    t_n_m_2_power_n = normalizar([n * (math.floor(n / 2)) * 2 ** n for n in N])
     t_n_power_2 = normalizar([(n ** 2) for n in N])
 
     for experimentos in sets:
@@ -79,8 +79,8 @@ def comparar_complejidad():
 
     generar_grafico(
         N,
-        [t for t in t_bt] + [t_m_2_power_n],
-        [f'p={i}' for i in probabilidades] + ['m*2^n'],
+        [t for t in t_bt] + [t_n_m_2_power_n],
+        [f'p={i}' for i in probabilidades] + ['n*m*2^n'],
         'Complejidad algorítmica backtracking',
         'complejidad_algoritmica_backtracking.png'
     )
